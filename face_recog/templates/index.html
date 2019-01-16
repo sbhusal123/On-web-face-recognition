@@ -1,0 +1,67 @@
+{%extends 'base_template.html'%}
+
+{% block content %}
+
+<div class="container">
+    <br><br>
+        <div class="row">
+            <a href="{%url 'myapp:index'%}"><button class="btn btn-primary">Home</button></a><br><br>
+            <div class="col-sm-6" style="border:2px solid green;border-radius:2px;background:violet">
+                  <h2>Face Recognition Demo</h2>
+
+                {% if found%}
+                    <h3>Image Contains Following Persons:</h3>
+                        {%for name in found%}
+                            <p style="color:green;font-size:20px">{{name}}</p>
+                        {%endfor%}
+                {%endif%}
+                <br><br>
+                    <form method="post" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <div class="form-group">
+                            <label for="file">Select File</label>
+                            <input type="file" name="myfile" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                <br><br>
+                {% if uploaded_file_url %}
+                <h3>Your Uploaded Image</h3>
+                <img src="{{ uploaded_file_url }}" align="center" width="500" height="500"/>
+                <br>
+                <br>
+
+                <form action="{%url 'myapp:scan' %}" method="post">
+                    {%csrf_token%}
+                    <button type="submit" class="btn btn-warning btn-lg">Scan-Person</button>
+                </form>
+                {% endif %}
+                <br><br>
+            </div>
+
+            <div class="col-sm-6" style="border:2px solid teal;border-radius:2px;background:violet">
+                <h2>New User</h2>
+                <br><br>
+                        <form method="post" action="{%url 'myapp:register' %}" enctype="multipart/form-data">
+                            {%csrf_token%}
+                            <div class="form-group">
+                                <label for="email">Username</label>
+                                <input type="text" class="form-control" id="email" placeholder="Enter username" name="username" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="file">Profile Image</label>
+                                <input type="file" name="profile_image" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                <br>
+            </div>
+
+        </div>
+</div>
+
+
+{% endblock %}
+
