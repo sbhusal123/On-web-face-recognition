@@ -1,4 +1,4 @@
-# On-web-image-recognition
+# On-web-face-recognition
 Simple image recognition integration with django.(face_recognition library)
 
 
